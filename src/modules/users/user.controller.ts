@@ -52,21 +52,22 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { accessToken } = req.cookies;
+    // const { accessToken } = req.cookies;
 
-    // const verifiedToken = Jwt.verify(accessToken, config.jwt_access_secret);
+    // console.log(req.user,'user')
+    // // // const verifiedToken = Jwt.verify(accessToken, config.jwt_access_secret);
 
-    const verifiedToken = jwtUtils.verifiedToken(
-      accessToken,
-      config.jwt_access_secret,
-    );
+    // const verifiedToken = jwtUtils.verifiedToken(
+    //   accessToken,
+    //   config.jwt_access_secret,
+    // );
 
-    if (typeof verifiedToken === "string") {
-      throw new Error(verifiedToken);
-    }
+    // if (typeof verifiedToken === "string") {
+    //   throw new Error(verifiedToken);
+    // }
 
-    const profile = await userService.getMyProfileFromDB(verifiedToken.id);
-    console.log(verifiedToken);
+    const profile = await userService.getMyProfileFromDB(req.user?.id as string);
+    // console.log(verifiedToken);
 
     sendREsponse(res, {
       success: true,
