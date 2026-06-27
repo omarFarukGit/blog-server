@@ -9,6 +9,8 @@ import { prisma } from "./lib/prisma";
 import bcrypt from "bcryptjs";
 import { UserRoutes } from "./modules/users/user.route";
 import { authRoutes } from "./modules/auth/auth.routes";
+import { postRoutes } from "./modules/post/post.route";
+import { commentRoutes } from "./modules/comment/comment.route";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,6 +33,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/users", UserRoutes);
-app.use("/api/auth",authRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 export default app;
