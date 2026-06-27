@@ -5,7 +5,7 @@ import { postController } from "./post.controller";
 
 const router = Router();
 
-router.post('/',auth(Role.ADMIN,Role.USER),postController.createPost)
+router.post('/',auth(Role.ADMIN,Role.USER,Role.AUTHOR),postController.createPost)
 
 router.get('/',auth(),postController.getAllPosts)
 

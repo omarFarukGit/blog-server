@@ -1,6 +1,30 @@
-const createPost = () => {};
+import { prisma } from "../../lib/prisma";
+import { IcreatePostPayload } from "./post.interface";
 
-const getAllPosts = () => {};
+const createPost = async (payload: IcreatePostPayload, userId: string) => {
+  const result = await prisma.post.create({
+    data: {
+      ...payload,
+      authorId: userId,
+    },
+  });
+
+  return result;
+};
+
+const getAllPosts = async () => {
+  const posts = await prisma.post.findMany({
+    include: {
+      author: {
+        omit: {
+          password: true,
+        },
+      },
+      comments: true,
+    },
+  });
+  return posts;
+};
 
 const getPostById = () => {};
 
@@ -8,9 +32,9 @@ const updatePost = () => {};
 
 const deletePost = () => {};
 
-const getPostsStats=()=>{}
+const getPostsStats = () => {};
 
-const getMyPosts=()=>{}
+const getMyPosts = () => {};
 
 export const postService = {
   createPost,
@@ -19,5 +43,5 @@ export const postService = {
   updatePost,
   deletePost,
   getPostsStats,
-  getMyPosts
+  getMyPosts,
 };
