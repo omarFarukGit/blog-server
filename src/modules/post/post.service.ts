@@ -197,6 +197,21 @@ const getPostsStats = async () => {
         status: CommentStatus.REJECT,
       },
     });
+
+    //not a good aprovece
+    // const allPots=await tx.post.findMany();
+    // let totalPostViews=0;
+    // allPots.forEach((post)=>{
+    //   totalPostViews=totalPostViews+ post.views
+    // })
+
+    const totalPostViewsAvg = await tx.post.aggregate({
+      _sum: {
+        views: true,
+      },
+    });
+
+    const totalPostViews = totalPostViewsAvg._sum.views;
     return {
       totalPosts,
       totalPublishedPost,
@@ -205,6 +220,7 @@ const getPostsStats = async () => {
       totalComment,
       totalApprovedComment,
       totalRejectdComment,
+      totalPostViews,
     };
   });
 
